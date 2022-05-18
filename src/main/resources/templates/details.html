@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="layout/main.html">
+<div layout:fragment="mainContentPage">
+
+    <div class="container mt-4" th:if="${app != null}">
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <div class="row">
+                    <div class="col mx-4">
+                        <div class="h1" th:text="${app.name}"></div>
+                        <div class="row g-2 my-4">
+                            <div>
+                                <b>Тип </b><span th:text="${app.types.name}"></span>
+                            </div>
+                            <div>
+                                <b>Оценка </b><span th:text="${app.estimation}"></span>
+                            </div>
+                            <div>
+                                <b>Возрастное ограничение </b><span th:text="${app.age_limit}"></span>+
+                            </div>
+                            <div>
+                                <b>Размер </b><span th:text="${app.memory_size}"></span> Mb
+                            </div>
+                        </div>
+                        <div class="row g-1 mt-5">
+                            <div class="h3">Описание</div>
+                            <div>
+                                <div class="col" th:text="${app.description}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <div class="row">
+            <div class="col-8 mx-auto text-center">
+                <button class="btn btn-outline-success mt-2" style="width: 300px" data-bs-toggle="modal"
+                        data-bs-target="#edit">
+                    EDIT
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit App</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <form th:action="@{'/update'}" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" class="form-control" name="item_id"
+                               th:value="${app.id}">
+                        <div>
+                            <label>Название:</label>
+                            <input type="text" class="form-control" name="item_name"
+                                   th:value="${app.name}" required>
+                        </div>
+                        <div class="my-3">
+                            <label>Размер:</label>
+                            <input type="number" min="0" step="0.1" class="form-control" name="memory_size"
+                                   th:value="${app.memory_size}" required>
+                        </div>
+                        <div>
+                            <label>Оценка:</label>
+                            <input type="number" min="0" max="5" step="0.1" class="form-control" name="item_estimation"
+                                   th:value="${app.estimation}" required>
+                        </div>
+                        <div class="my-3">
+                            <label>Возрастное ограничение:</label>
+                            <input type="number" min="0" class="form-control" name="item_age"
+                                   th:value="${app.age_limit}" required>
+                        </div>
+                        <div>
+                            <label>Тип:</label>
+                            <select name="item_types_id" class="form-control" >
+                                <option th:each="type : ${appTypes}" th:value="${type.id}"><span th:text="${type.name}"></span></option>
+                            </select>
+                        </div>
+                        <div class="my-3">
+                            <label>Описание:</label>
+                            <textarea class="form-control" rows="3" name="item_description" th:field="${app.description}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-info">SAVE</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                data-bs-target="#delete">
+                            DELETE
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="deleteModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content lg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModal">Delete App</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{'/delete'}" method="post">
+                        <input type="hidden" class="form-control" name="item_id" th:value="${app.id}">
+                        <p class="h4 lead">Are You Sure?</p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                NO
+                            </button>
+                            <button class="btn btn-outline-danger">YES</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+</html>

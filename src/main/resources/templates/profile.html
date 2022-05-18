@@ -1,0 +1,52 @@
+<html lang="en"
+      xmlns:th = "http://www.thymeleaf.org"
+      xmlns:layout = "http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+
+<div layout:fragment="mainContentPage">
+    <div class="wrapper" style=" position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 1250px;
+  display: flex;
+  box-shadow: 0 1px 20px 0 rgba(69,90,100,.08);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="wrapper">
+
+            <div class="">
+                <div class="">
+                    <div class="row d-flex justify-content-center mt-5">
+                        <div class="text-bg-primary p-3 " style="background: palegreen; text-align: center;"><h1> Информация</h1></div>
+                    </div>
+                    <div class="left">
+                        <img style="border-radius: 5px;margin-bottom: 10px;align-content: center; width: 300px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                             alt="user" width="100">
+                    </div>
+                        <div size="border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px" class="right">
+                            <hr>
+                        <div class="info">
+                            <p><h3>Your Email:</h3></p>
+ <p><h1 class="text-center"> <span th:text="${user.email}"></span>.</h1></p>
+                        </div>
+                            <hr>
+                        <div class="data">
+                            <p><h3>Your Name:</h3></p>
+                            <p> <h1 class="text-center"><span th:text="${user.full_name}"></span>. </h1></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+</html>

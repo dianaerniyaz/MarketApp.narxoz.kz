@@ -1,0 +1,93 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html" >
+
+<div layout:fragment="mainContentPage" >
+    <div class="container" style="left: auto;">
+        <div class="row">
+
+            <!--            главная-->
+            <div class="col-md-10 mx-auto">
+
+                <div class="container my-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div th:if="${#request.getParameter('delete') != null}">
+                                <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                                    App Deleted Successfully!
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${#request.getParameter('apps')==null && #request.getParameter('games')==null}" style=" ">
+                    <div class="mt-5" >
+                        <div class="row gy-5" >
+                            <div class="col-3" th:each="app : ${apps}" >
+                                <div class="card shadow p-4 border-light" style="width: 14rem; background: PaleGreen; ">
+                                    <a th:href="@{'/details/'+${app.id}}" style=" text-decoration:none; color:black">
+                                        <p class="card-text h4">
+                                            <strong th:text="${app.name}"></strong>
+                                        </p>
+                                        <p class="card-text h5">
+                                            Оценка: <span th:text="${app.estimation}"></span>
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${#request.getParameter('apps')!=null}">
+                    <div class="mt-5">
+                        <div class="row gy-5">
+                            <div class="col-3" th:each="app : ${apps}" th:if="${app.types.id == 2}">
+                                <div class="card shadow p-4 border-light" style="width: 15rem; background: PaleGreen;">
+                                    <a th:href="@{'/details/'+${app.id}}" style="text-decoration:none; color:black">
+                                        <p class="card-text h4">
+                                            <strong th:text="${app.name}"></strong>
+                                        </p>
+                                        <p class="card-text h5">
+                                            Оценка: <span th:text="${app.estimation}"></span>
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div th:if="${#request.getParameter('games')!=null}">
+                    <div class="mt-5">
+                        <div class="row gy-5">
+                            <div class="col-3" th:each="app : ${apps}" th:if="${app.types.id == 1}">
+                                <div class="card shadow p-4 border-light" style="width: 15rem; background: PaleGreen;">
+                                    <a th:href="@{'/details/'+${app.id}}" style="text-decoration:none; color:black">
+                                        <p class="card-text h4">
+                                            <strong th:text="${app.name}"></strong>
+                                        </p>
+                                        <p class="card-text h5">
+                                            Оценка: <span th:text="${app.estimation}"></span>
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</html>
